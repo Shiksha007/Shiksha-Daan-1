@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>शिक्षा दान - हर बच्चा पढ़ेगा, भारत बढ़ेगा</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            text-align: center;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 22px;
+            color: #ffdd57;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        button {
+            background: #ffcc00;
+            color: black;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 80%;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #e6b800;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .whatsapp-container {
+            margin-top: 20px;
+        }
+
+        .whatsapp-container a {
+            display: inline-block;
+            background-color: #25D366;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="info-container">
+        <h1>🙏 शिक्षा दान - हर बच्चा पढ़ेगा, भारत बढ़ेगा 🙏</h1>
+        <div id="info-content">
+            <h2>📢 हमारी पहल</h2>
+            <p>शिक्षा हर बच्चे का अधिकार है, लेकिन लाखों गरीब बच्चे इससे वंचित हैं। इस पहल का उद्देश्य जरूरतमंद बच्चों को शिक्षा सामग्री, ट्यूशन सहायता और डिजिटल लर्निंग का अवसर देना है।</p>
+        </div>
+        <button onclick="nextInfo()">➡️ आगे बढ़ें</button>
+    </div>
+
+    <div class="container hidden" id="registration">
+        <h1>📋 Registration Form</h1>
+        <input type="text" id="name" placeholder="नाम दर्ज करें" required><br>
+        <input type="tel" id="mobile" placeholder="मोबाइल नंबर" required><br>
+        <input type="text" id="state" placeholder="राज्य" required><br>
+        <input type="text" id="district" placeholder="ज़िला" required><br>
+        <input type="text" id="pincode" placeholder="पिन कोड" required><br>
+        <button onclick="generateUserID()">रजिस्टर करें</button>
+    </div>
+
+    <div class="container hidden" id="payment">
+        <h1>💰 शिक्षा दान</h1>
+        <p>📌 कृपया अपनी मनचाही राशि दर्ज करें:</p>
+        <input type="number" id="amount" placeholder="दान राशि (₹)" min="1" required><br>
+        <button onclick="makePayment()">💳 दान करें</button>
+        <p id="thank-you" class="hidden">🙏 धन्यवाद! आपकी दानराशि गरीब बच्चों की शिक्षा में सहायता करेगी।</p>
+        <button class="hidden" id="sendEmailButton" onclick="sendEmail()">📧 Send via Gmail</button>
+
+        <div class="whatsapp-container">
+            <p>📢 अगर आप जानना चाहते हैं कि आपका दान कैसे उपयोग किया जा रहा है, तो हमारे WhatsApp चैनल को जॉइन करें:</p>
+            <a href="https://whatsapp.com/channel/0029VbA7O8ODjiOfEVzfir05" target="_blank">📲 WhatsApp Channel जॉइन करें</a>
+        </div>
+    </div>
+
+    <script>
+        let infoIndex = 0;
+        let infoData = [
+            { heading: "🎯 हमारा उद्देश्य", text: "✅ गरीब बच्चों को किताबें, कॉपी और अन्य शिक्षा सामग्री उपलब्ध कराना।<br>✅ ज़रूरतमंद बच्चों की ट्यूशन और स्कूल फीस में सहायता करना।" },
+            { heading: "💡 आप कैसे मदद कर सकते हैं?", text: "सिर्फ आपका दान किसी गरीब बच्चे की शिक्षा को रोशन कर सकता है।" },
+            { heading: "🙏 आपका योगदान क्यों ज़रूरी है?", text: "अगर हम सब मिलकर थोड़ा-थोड़ा करें, तो बड़े बदलाव ला सकते हैं।" }
+        ];
+
+        function nextInfo() {
+            if (infoIndex < infoData.length) {
+                document.getElementById("info-content").innerHTML = `<h2>${infoData[infoIndex].heading}</h2><p>${infoData[infoIndex].text}</p>`;
+                infoIndex++;
+            } else {
+                document.getElementById("info-container").classList.add("hidden");
+                document.getElementById("registration").classList.remove("hidden");
+            }
+        }
+
+        function generateUserID() {
+            document.getElementById("registration").classList.add("hidden");
+            document.getElementById("payment").classList.remove("hidden");
+        }
+
+        function makePayment() {
+            let amount = document.getElementById("amount").value;
+            if (!amount || amount < 1) {
+                alert("कृपया मान्य राशि दर्ज करें।");
+                return;
+            }
+
+            let upiLink = `upi://pay?pa=ak98064201@axl&pn=ShikshaDaan&am=${amount}&cu=INR`;
+            window.location.href = upiLink;
+
+            setTimeout(() => {
+                document.getElementById("thank-you").classList.remove("hidden");
+                document.getElementById("sendEmailButton").classList.remove("hidden");
+            }, 4000);
+        }
+
+        function sendEmail() {
+            let name = document.getElementById("name").value;
+            let amount = document.getElementById("amount").value;
+            let emailBody = `नमस्ते,\n\nमेरा नाम ${name} है। मैंने ₹${amount} का शिक्षा दान कर दिया है।\n\nधन्यवाद! 🙏`;
+            let mailtoLink = `mailto:kmtfeasy@gmail.com?subject=शिक्षा दान&body=${encodeURIComponent(emailBody)}`;
+            window.location.href = mailtoLink;
+        }
+    </script>
+
+</body>
+</html>
